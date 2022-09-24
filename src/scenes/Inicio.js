@@ -6,6 +6,5 @@ export default class Inicio extends Phaser.Scene {
 
     
     create() {
-        this.scene.start("Preload")
     }
 }

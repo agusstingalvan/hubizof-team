@@ -5,5 +5,6 @@ export default class Button {
             .setOrigin(0.5)
             .setInteractive({ useHandCursor: true })
             .on("pointerdown", () => callback()).setScale(scale)
+
     }
 }

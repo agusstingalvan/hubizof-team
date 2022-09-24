@@ -1,5 +1,5 @@
-import Inicio from "../scenes/Inicio.js";
-import Preload from "../scenes/preload.js";
+
+import Preload from "../scenes/Preload.js";
 import MainMenu from "../scenes/MainMenu.js";
 
 
@@ -28,7 +28,6 @@ export const config = {
         },
     },
     scene: [
-        Inicio,
         Preload,
         MainMenu
 
