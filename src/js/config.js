@@ -1,3 +1,7 @@
+import Inicio from "../scenes/Inicio.js";
+import Preload from "../scenes/preload.js";
+import MainMenu from "../scenes/MainMenu.js";
+
 
 export const config = {
     type: Phaser.AUTO,
@@ -24,5 +28,9 @@ export const config = {
         },
     },
     scene: [
+        Inicio,
+        Preload,
+        MainMenu
+
     ],
 };
