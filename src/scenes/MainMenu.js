@@ -4,10 +4,13 @@ export default class MainMenu extends Phaser.Scene {
     constructor() {
         super("MainMenu");
     }
+    init(data){
+        
+    }
     preload(){}
 
     create() {
-        new Button(this,100, 200, "btn" , ()=>{console.log('Hola')}, 0.2)
+        new Button(this,100, 200, "btn" , ()=>{this.scene.start('Runner')}, 0.2);
     }
     update(){}
 }

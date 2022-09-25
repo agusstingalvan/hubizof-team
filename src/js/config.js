@@ -1,6 +1,7 @@
 
 import Preload from "../scenes/Preload.js";
 import MainMenu from "../scenes/MainMenu.js";
+import Runner from "../scenes/Runner.js";
 
 
 export const config = {
@@ -29,7 +30,7 @@ export const config = {
     },
     scene: [
         Preload,
-        MainMenu
-
+        MainMenu,
+        Runner
     ],
 };
