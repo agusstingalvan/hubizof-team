@@ -1,4 +1,9 @@
 
+import Preload from "../scenes/Preload.js";
+import MainMenu from "../scenes/MainMenu.js";
+import Runner from "../scenes/Runner.js";
+
+
 export const config = {
     type: Phaser.AUTO,
     width: 1280,
@@ -24,5 +29,8 @@ export const config = {
         },
     },
     scene: [
+        Preload,
+        MainMenu,
+        Runner
     ],
 };
