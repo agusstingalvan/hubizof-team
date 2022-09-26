@@ -3,6 +3,19 @@ import Button from "./Button.js"
 export class PopUp{
     constructor(scene, x, y, text, color, nameNextScene, configNextScene ){
         
+        this.container = scene.add.container(x, y);
+        
+        this.graphics = scene.add.graphics();
+    
+        this.graphics.fillStyle(color, 1);
+        this.graphics.fillRect(0, 0, 600, 200);
+
+        this.txt = scene.add
+        .text(300, 100, text, {fontSize: 30, fontStyle: 'bold'})
+        .setOrigin(0.5);
+
+        // this.container.add([this.graphics, this.txt]);
+
         /*this.container = scene.add.container(x, y);
         console.log(this.container)
         
