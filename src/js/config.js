@@ -2,6 +2,8 @@
 import Preload from "../scenes/Preload.js";
 import MainMenu from "../scenes/MainMenu.js";
 import Runner from "../scenes/Runner.js";
+import UI from "../scenes/UI.js";
+import GameOver from "../scenes/GameOver.js";
 
 
 export const config = {
@@ -31,6 +33,9 @@ export const config = {
     scene: [
         Preload,
         MainMenu,
-        Runner
+        
+        Runner,
+        UI,
+        GameOver
     ],
 };

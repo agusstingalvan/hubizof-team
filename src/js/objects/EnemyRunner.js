@@ -5,9 +5,10 @@ export default class EnemyRunner extends Phaser.Physics.Arcade.Sprite{
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
-        // this.setCollideWorldBounds(true);
         
         this.setBounce(0.2)
+        this.anims.play("enemy-anims");
+        this.setScale(1.6)
     }
     run(objPosPlayer){
         const {x, y} = objPosPlayer;
