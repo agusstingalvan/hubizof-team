@@ -1,5 +1,5 @@
 export default class Button {
-    constructor(scene, x, y, texture, text, size, callback, scale) {
+    constructor(scene, x, y, texture, text, size = 16, callback, scale) {
         console.log(scene)
         this.container = scene.add.container(x, y);
         

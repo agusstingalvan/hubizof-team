@@ -1,7 +1,7 @@
 import Button from "./Button.js"
 
 export class PopUp{
-    constructor(scene, x, y, text, color ){
+    constructor(scene, x, y, text, color, nameNextScene, configNextScene ){
         
         /*this.container = scene.add.container(x, y);
         console.log(this.container)
@@ -37,7 +37,7 @@ export class PopUp{
 
         
 
-        this.botonMini = new Button (scene, this.centroX+200, this.centroY+this.move, "btn", ">", 50, ()=> {scene.scene.start("EscenadeMinijuego")}, .1);
+        this.botonMini = new Button (scene, this.centroX+200, this.centroY+this.move, "btn", "Acepto", 24, ()=> {scene.scene.start(nameNextScene, configNextScene)}, .1);
         
         
         this.container.add(this.tile)
