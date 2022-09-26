@@ -4,6 +4,7 @@ import MainMenu from "../scenes/MainMenu.js";
 import Runner from "../scenes/Runner.js";
 import UI from "../scenes/UI.js";
 import GameOver from "../scenes/GameOver.js";
+import Habitacion from "../scenes/Habitacion.js";
 
 
 export const config = {
@@ -27,13 +28,13 @@ export const config = {
         default: "arcade",
         arcade: {
             gravity: { y: 300 },
-            debug: false,
+            debug: true,
         },
     },
     scene: [
         Preload,
         MainMenu,
-        
+        Habitacion,
         Runner,
         UI,
         GameOver

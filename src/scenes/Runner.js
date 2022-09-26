@@ -20,6 +20,7 @@ export default class Runner extends Phaser.Scene{
     }
     init(data){
         console.log('estas en runner')
+        this.anims.resumeAll()
         this.gameOver = false;
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
@@ -152,7 +153,7 @@ export default class Runner extends Phaser.Scene{
         this.physics.add.overlap(this.player, this.star, (player, star)=>{
             this.scene.stop('UI');
             this.scene.stop(this);
-            this.scene.start('MainMenu', {
+            this.scene.start('Habitacion', {
                 player: {
                     health: this.player.health
                 }
@@ -205,7 +206,7 @@ export default class Runner extends Phaser.Scene{
         this.gameOver = false;
         this.scene.stop('UI');
         this.scene.stop(this);
-        this.scene.start('MainMenu', {
+        this.scene.start('Habitacion', {
             player: {
                 health: this.player.health,
                 canPickHeart: this.canPickHeart

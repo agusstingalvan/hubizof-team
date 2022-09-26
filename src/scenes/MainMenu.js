@@ -20,13 +20,26 @@ export default class MainMenu extends Phaser.Scene {
         }
         
     }
+    
     preload(){}
 
     create() {
-        this.btnPlayRunner = new Button(this,100, 200, "btn" , ()=>{this.scene.start('Runner', {player: {
+
+        //background MENU
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "backMenu")
+        .setScale(1.95)
+
+        // parametros button scene, x, y, texture, text, callback, scale
+        this.btnPlayRunner = new Button(this,1000, 360, "btn" ,"Jugar", 24, ()=>{this.scene.start("Habitacion")}, 0.4);
+
+        /*new Button(this,1000, 460, "btn" ,"Opciones", 25, ()=>{this.scene.start('Runner', {player: {
             health: this.healthPlayer,
             canPickHeart: this.canPickHeart
-        }})}, 0.2);
+        }})}, 0.4);
+
+        new Button(this,1000, 560, "btn" ,"*", 25, ()=>{console.log('Hola')}, 0.4);*/
+
+;
     }
     update(){
         if(this.gameOver) {

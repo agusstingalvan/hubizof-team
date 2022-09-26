@@ -12,7 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true);
         this.setBounce(0.5)
         // console.log(this.body.allowGravity)
-        this.anims.play('player-runner');
+        this.anims.play('player-runner', true);
     }
     removeHealth(){
         --this.health;
