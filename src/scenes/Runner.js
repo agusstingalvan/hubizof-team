@@ -75,12 +75,11 @@ export default class Runner extends Phaser.Scene{
                 case 'sofa':
                     this.ballGroup.create(x, y, 'ball');
                 break;
-                // case 'spike':
-                //     this.spikesGroup.create(x, y, 'spike');
-                // break;
+                case 'spike':
+                    this.spikesGroup.create(x, y, 'spike');
+                break;
                 case 'chocolate':
                     this.chocolatesGroup.create(x, y, 'chocolate');
-                    console.log(objData)
                 break;
                 case 'star':
                     // this.chocolatesGroup.create(x, y, 'star');
