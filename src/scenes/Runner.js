@@ -7,13 +7,14 @@ import Player from "../js/objects/Player.js";
 export default class Runner extends Phaser.Scene{
     gameOver = false
     player;
-    healthPlayer = 5;
-    enemy
+    healthPlayer = 5; //Dato que viene desde Habitación
+    enemy;
     cursors;
     keyR;
     count = 0;
     obstaclesGroup;
     chocolatesGroup;
+    canPickHeart; //Dato que viene desde Habitación
     constructor(){
         super('Runner')
     }
@@ -22,6 +23,7 @@ export default class Runner extends Phaser.Scene{
         this.gameOver = false;
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
+        this.canPickHeart = data.player.canPickHeart;
         if(!data.player.health) return;
         if(data.player.health) {
             this.healthPlayer = data.player.health;
@@ -79,7 +81,7 @@ export default class Runner extends Phaser.Scene{
                     this.spikesGroup.create(x, y, 'spike');
                 break;
                 case 'chocolate':
-                    this.chocolatesGroup.create(x, y, 'chocolate');
+                    if(this.canPickHeart) this.chocolatesGroup.create(x, y, 'chocolate');
                 break;
                 case 'star':
                     // this.chocolatesGroup.create(x, y, 'star');
@@ -137,8 +139,12 @@ export default class Runner extends Phaser.Scene{
         });
         //Cuando agarras el chocolate
         this.physics.add.overlap(this.player, this.chocolatesGroup, (player, chocolate)=>{
-            if(this.player.health < 5){
+            if(this.player.health === 5) return; 
+            if(this.player.health < 5 && this.canPickHeart){
+                console.log('YESSS')
                 this.player.health = this.player.health + 1;
+                this.canPickHeart = false;
+                this.scene.launch('UI', {player:{health: this.player.health}})
                 chocolate.destroy()
             }
         });
@@ -201,7 +207,8 @@ export default class Runner extends Phaser.Scene{
         this.scene.stop(this);
         this.scene.start('MainMenu', {
             player: {
-                health: this.player.health
+                health: this.player.health,
+                canPickHeart: this.canPickHeart
             }
         })
     }

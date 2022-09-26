@@ -3,6 +3,7 @@ import Button from "../js/functions/Button.js";
 export default class MainMenu extends Phaser.Scene {
     gameOver = false;
     healthPlayer;
+    canPickHeart = true;
     constructor() {
         super("MainMenu");
     }
@@ -15,6 +16,7 @@ export default class MainMenu extends Phaser.Scene {
         if(data.player.health){
             console.log('La vida del personaje es ', data.player.health)
             this.healthPlayer = data.player.health
+            this.canPickHeart = data.player.canPickHeart
         }
         
     }
@@ -22,7 +24,8 @@ export default class MainMenu extends Phaser.Scene {
 
     create() {
         this.btnPlayRunner = new Button(this,100, 200, "btn" , ()=>{this.scene.start('Runner', {player: {
-            health: this.healthPlayer
+            health: this.healthPlayer,
+            canPickHeart: this.canPickHeart
         }})}, 0.2);
     }
     update(){
