@@ -12,7 +12,7 @@ export default class Button {
         .setScale(scale)
         
 
-        this.txt = scene.add.text(0, 0, text, {fontSize: size, fontStyle: 'bold'}).setOrigin(0.5);
+        this.txt = scene.add.text(0, 0, text, {fontSize: size, fontStyle: 'bold', fontFamily: 'Open Sans'}).setOrigin(0.5);
 
         this.container.add([this.img, this.txt]);
 
