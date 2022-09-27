@@ -5,6 +5,7 @@ import Runner from "../scenes/Runner.js";
 import UI from "../scenes/UI.js";
 import GameOver from "../scenes/GameOver.js";
 import Habitacion from "../scenes/Habitacion.js";
+import Rosas from "../scenes/Rosas.js";
 
 
 export const config = {
@@ -36,6 +37,7 @@ export const config = {
         MainMenu,
         Habitacion,
         Runner,
+        Rosas,
         UI,
         GameOver
     ],

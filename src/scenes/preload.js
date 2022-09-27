@@ -9,6 +9,7 @@ export default class Preload extends Phaser.Scene {
     preload(){
         //Mapa
         this.load.tilemapTiledJSON('runner', 'public/assets/tilemaps/runner.json');
+        this.load.tilemapTiledJSON('rosas', 'public/assets/tilemaps/rosas.json');
         //interfaceUIDES
         this.load.image("btn", "public/assets/boton.png");
         //fondos
@@ -37,23 +38,34 @@ export default class Preload extends Phaser.Scene {
 
 
 
-        //Prototipo
+        //Prototipo- RUNNER
         this.load.image('runner-map', 'public/assets/runner/runner-map.png');
         this.load.image('almohada', 'public/assets/runner/almohada.png');
         this.load.image('chocolate', 'public/assets/runner/chocolate.png');
         this.load.image('player-static', 'public/assets/player-static.png');
         this.load.spritesheet('player-spritesheet', 'public/assets/player-spritesheet.png', {frameWidth: 64, frameHeight: 64})
         this.load.atlas('atlas-hearts', 'public/assets/UI/hearts.png', 'public/assets/UI/hearts.json')
-        this.load.image('enemy', 'public/assets/runner/enemy-static.png');
-        this.load.spritesheet('enemy-spritesheet', 'public/assets/runner/enemy.png', {frameWidth: 64, frameHeight: 64})
+        this.load.image('enemy-anxiety', 'public/assets/runner/enemy-static.png');
+        this.load.spritesheet('enemy-anxiety-spritesheet', 'public/assets/runner/enemy.png', {frameWidth: 64, frameHeight: 64})
         this.load.image('book', 'public/assets/runner/book-static.png');
         this.load.spritesheet('book-spritesheet', 'public/assets/runner/book.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('ball', 'public/assets/runner/ball-static.png');
-        this.load.image('star', 'public/assets/runner/star.png');
         this.load.spritesheet('ball-spritesheet', 'public/assets/runner/ball.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('spike', 'public/assets/runner/spike.png');
+        this.load.image('star', 'public/assets/runner/star.png');
         // this.load.image('sofa', 'public/assets/sofa.png')
         
+
+        //Prototipo - ROSAS
+        this.load.image('rosas-map', 'public/assets/rosas/rosas-map.png');
+        this.load.image('enemy-ira', 'public/assets/rosas/enemy-ira-static.png');
+        this.load.spritesheet('enemy-ira-spritesheet', 'public/assets/rosas/enemy-ira.png', {frameWidth: 64, frameHeight: 64})
+        this.load.image('balls-fire-static', 'public/assets/rosas/balls-fire-static.png');
+        this.load.spritesheet('balls-fire-spritesheet', 'public/assets/rosas/balls-fire.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('book-ira-static', 'public/assets/rosas/book-ira-static.png');
+        this.load.spritesheet('book-ira-spritesheet', 'public/assets/rosas/book-ira.png', {frameWidth: 64, frameHeight: 64});
+        this.load.image('mueble-static', 'public/assets/rosas/book-ira-static.png');
+        this.load.spritesheet('mueble-spritesheet', 'public/assets/rosas/book-ira.png', {frameWidth: 133, frameHeight: 107});
     }
 
     create() {
@@ -78,8 +90,17 @@ export default class Preload extends Phaser.Scene {
         });
         
         this.anims.create({
-            key: "enemy-anims",
-            frames: this.anims.generateFrameNumbers("enemy-spritesheet", {
+            key: "enemy-anxiety-anims",
+            frames: this.anims.generateFrameNumbers("enemy-anxiety-spritesheet", {
+                start: 0,
+                end: 6,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "enemy-ira-anims",
+            frames: this.anims.generateFrameNumbers("enemy-ira-spritesheet", {
                 start: 0,
                 end: 6,
             }),
@@ -104,7 +125,24 @@ export default class Preload extends Phaser.Scene {
             frameRate: 12,
             repeat: 0,
         });
-        
+        this.anims.create({
+            key: "balls-fire-anims",
+            frames: this.anims.generateFrameNumbers("balls-fire-spritesheet", {
+                start: 0,
+                end: 7,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "book-ira-anims",
+            frames: this.anims.generateFrameNumbers("book-ira-spritesheet", {
+                start: 0,
+                end: 6,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
 
 
         setTimeout(()=>{

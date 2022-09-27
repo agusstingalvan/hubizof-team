@@ -15,7 +15,7 @@ export default class Habitacion extends Phaser.Scene {
             this.gameOver = true;
         }
         if(data.player.health){
-            console.log('La vida del personaje es ', data.player.health)
+            // console.log('La vida del personaje es ', data.player.health)
             this.healthPlayer = data.player.health
             this.canPickHeart = data.player.canPickHeart
         }
@@ -81,8 +81,12 @@ export default class Habitacion extends Phaser.Scene {
             health: this.healthPlayer,
             canPickHeart: this.canPickHeart
         }})}, 0.2);
+        this.btnPlayRosas = new Button(this, 100, 300, "btn", "Rosas", 16, ()=>{this.scene.start('Rosas', {player: {
+            health: this.healthPlayer,
+            canPickHeart: this.canPickHeart
+        }})}, 0.2);
 
-        this.physics.add.collider(this.player, paredes, ()=>(console.log("pum")));
+        this.physics.add.collider(this.player, paredes);
         this.physics.add.collider(this.player, this.npc1.img, ()=>{
             const posX = this.cameras.main.centerX;
             const posY = this.cameras.main.centerY + this.move;

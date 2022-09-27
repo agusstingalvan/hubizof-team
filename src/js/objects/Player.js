@@ -29,8 +29,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         enemy.run(this, objPos)
         //aNIMACION
     }
-    jump(){
-        this.setVelocityY(-300)
+    jump(speed = 300){
+        this.setVelocityY(-speed)
         ++this.countJumps;
         //animacuion
     }

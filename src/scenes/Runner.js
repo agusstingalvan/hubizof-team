@@ -19,7 +19,7 @@ export default class Runner extends Phaser.Scene{
         super('Runner')
     }
     init(data){
-        console.log('estas en runner')
+        // console.log('estas en runner')
         this.anims.resumeAll()
         this.gameOver = false;
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -28,7 +28,7 @@ export default class Runner extends Phaser.Scene{
         if(!data.player.health) return;
         if(data.player.health) {
             this.healthPlayer = data.player.health;
-            console.log('Se actualizo la vida', this.healthPlayer)
+            // console.log('Se actualizo la vida', this.healthPlayer)
         }
     }
     create(){
@@ -64,13 +64,13 @@ export default class Runner extends Phaser.Scene{
         this.chocolatesGroup = this.physics.add.staticGroup();
         this.chocolatesGroup = this.physics.add.staticGroup();
 
-        console.log(objectsLayer.objects)
+        // console.log(objectsLayer.objects)
         objectsLayer.objects.forEach(objData => {
             const {x, y, name, type} = objData;
 
             switch(name || type){
                 case 'enemy':
-                        this.enemy = new EnemyRunner(this, x, y, 'enemy');
+                        this.enemy = new EnemyRunner(this, x, y, 'enemy-anxiety');
                     break;
                 case 'obstacles':
                     this.obstaclesGroup.create(x, y, 'book');
@@ -79,7 +79,7 @@ export default class Runner extends Phaser.Scene{
                     this.ballGroup.create(x, y, 'ball');
                 break;
                 case 'spike':
-                    this.spikesGroup.create(x, y, 'spike');
+                        this.spikesGroup.create(x, y, 'spike');
                 break;
                 case 'chocolate':
                     if(this.canPickHeart) this.chocolatesGroup.create(x, y, 'chocolate');
@@ -127,7 +127,7 @@ export default class Runner extends Phaser.Scene{
 
         //Cuando pisas un pincho -Mueres
         this.physics.add.collider(this.player, this.spikesGroup, (player, spike)=>{
-            console.log('El spike');
+            // console.log('El spike');
             this.hitPlayer()
             
         }, null, this);
@@ -135,14 +135,14 @@ export default class Runner extends Phaser.Scene{
 
         //Cuando te agarra el enemigo -Mueres
         this.physics.add.overlap(this.enemy, this.player, ()=>{
-            console.log('Moriste')
+            // console.log('Moriste')
             this.hitPlayer();
         });
         //Cuando agarras el chocolate
         this.physics.add.overlap(this.player, this.chocolatesGroup, (player, chocolate)=>{
             if(this.player.health === 5) return; 
             if(this.player.health < 5 && this.canPickHeart){
-                console.log('YESSS')
+                // console.log('YESSS')
                 this.player.health = this.player.health + 1;
                 this.canPickHeart = false;
                 this.scene.launch('UI', {player:{health: this.player.health}})
@@ -161,7 +161,7 @@ export default class Runner extends Phaser.Scene{
         });
         //Cuando choca con obstaculo
         this.physics.add.overlap(this.player, this.obstaclesGroup, (player, obstacle)=>{
-            console.log('Chocaste un obstaculo')
+            // console.log('Chocaste un obstaculo')
             obstacle.destroy()
             const startColor = Phaser.Display.Color.ValueToColor(0xffffff);
             const endColor = Phaser.Display.Color.ValueToColor(0xff0800);
