@@ -1,21 +1,20 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite{
     speed = 400;
-    heath = 5;
+    health;
     countJumps = 0;
     stop = false;
-    constructor(scene, x, y,  texture){
+    constructor(scene, x, y,  texture, health){
         super(scene, x, y, texture )
         this.scene = scene;
-
+        this.health = health;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
-        // this.setCollideWorldBounds(true);
-        
+        this.setCollideWorldBounds(true);
         this.setBounce(0.5)
-
+        this.anims.play('player-runner', true);
     }
-    removeHeath(){
-        this.removeHeath();
+    removeHealth(){
+        --this.health;
     }
     run(enemy){
         this.setVelocityX(this.speed);
@@ -24,11 +23,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
             y: this.y
         }
         enemy.run(this, objPos)
-        //aNIMACION
     }
-    jump(){
-        this.setVelocityY(-300)
+    jump(speed = 300){
+        this.setVelocityY(-speed)
         ++this.countJumps;
-        //animacuion
     }
 }
