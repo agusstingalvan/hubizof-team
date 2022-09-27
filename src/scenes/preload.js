@@ -14,7 +14,6 @@ export default class Preload extends Phaser.Scene {
         this.load.image("btn", "public/assets/boton.png");
         //fondos
         this.load.image("backMenu", "public/assets/background.png");
-        this.load.image("backHabitacion", "public/assets/backHabitacion.png");
 
         this.load.tilemapTiledJSON("habitacion", "public/assets/tilemap/habitacion.json")
         this.load.image("tile", "public/assets/Inicio.png");
@@ -23,17 +22,6 @@ export default class Preload extends Phaser.Scene {
         this.load.image("Npc1", "public/assets/oscuro.png");
         this.load.image("Npc2", "public/assets/naranja.png");
         this.load.image("Npc3", "public/assets/celeste.png");
-
-        // this.load.spritesheet("player", "public/assets/sprite.png", {
-        //     frameWidth:140,
-        //     frameHeigth:108
-        // })
-        
-        this.load.spritesheet('dude', "public/assets/dude.png", { frameWidth: 32, frameHeight: 48 });
-        // this.load.spritesheet('player', "public/assets/violeta.png", { frameWidth: 64, frameHeight: 64 });
-
-        this.load.text('data2', 'public/assets/talk2.txt');
-        this.load.text('data3', 'public/assets/talk3.txt');
 
 
 
@@ -143,21 +131,5 @@ export default class Preload extends Phaser.Scene {
             frameRate: 12,
             repeat: -1,
         });
-
-
-        setTimeout(()=>{
-        }, 3000)
-
-        
-
-        /*this.anims.create({
-            key: "runLeft",
-            frames: this.anims.generateFrameNumbers("run"),
-            frameRate: 7,
-            repeat: 0,
-            hideOnComplete: true
-        });*/
-
-        
     }
 }

@@ -15,7 +15,7 @@ export default class Habitacion extends Phaser.Scene {
             this.gameOver = true;
         }
         if(data.player.health){
-            // console.log('La vida del personaje es ', data.player.health)
+            console.log('La vida del personaje es ', data.player.health)
             this.healthPlayer = data.player.health
             this.canPickHeart = data.player.canPickHeart
         }
@@ -29,8 +29,6 @@ export default class Habitacion extends Phaser.Scene {
     preload(){}
 
     create() {
-        
-        //this.add.image(0, 0, "tile")
 
         const map = this.make.tilemap({ key: "habitacion" });
         const tileset = map.addTilesetImage("habitacion", "tile");
@@ -40,88 +38,81 @@ export default class Habitacion extends Phaser.Scene {
         
 
         paredes.setCollisionByProperty({collides: true});
-
-        this.celeste = map.findObject("objetos", (obj)=> obj.name === 'celeste');
-        
-
-
-        
-
-        
-        //Creacion de player//
+        const objectsLayer = map.getObjectLayer("objetos");
         
         
         
 
         //Personajes no jugables//
-        const spawnNpc1 = map.findObject("objetos", (obj)=> obj.name === "npc1")
-        this.npc1 = new Npc(this, spawnNpc1.x, spawnNpc1.y, "Npc1", 1, "Runner", {player: {
-            health: this.healthPlayer,
-            canPickHeart: this.canPickHeart
-        }})
-        this.talk1 = game.cache.text.get('data2');
+        objectsLayer.objects.forEach(objData => {
+            const {x, y, name} = objData;
 
-        const spawnNpc2 = map.findObject("objetos", (obj)=> obj.name === "npc2")
-        this.npc2 = new Npc(this, spawnNpc2.x, spawnNpc2.y, "Npc2", 1)
-        this.talk2 = game.cache.text.get('data2');
-
-        const spawnNpc3 = map.findObject("objetos", (obj)=> obj.name === "npc3")
-        this.npc3 = new Npc(this, spawnNpc3.x, spawnNpc3.y, "Npc3", 1)
-        this.talk3 = game.cache.text.get('data3');
-
-        const spawnPlayer = map.findObject("objetos", (obj)=> obj.name === 'player');
-        this.player = new Player(this, spawnPlayer.x, spawnPlayer.y, "player-static");
-        this.anims.resumeAll()
-        this.player.anims.play('player-idle');
-        this.player.setScale(2)
-        this.player.refreshBody()
-        this.player.body.allowGravity = false;
-
+            switch(name){
+                case 'player':
+                    this.player = new Player(this, x, y, "player-static");
+                    this.anims.resumeAll()
+                    this.player.anims.play('player-idle');
+                    this.player.setScale(2)
+                    this.player.refreshBody()
+                    this.player.body.allowGravity = false;
+                    break;
+                case 'npc1': 
+                    this.npc1 = new Npc(this, x, y, "Npc1", 1, "Runner", {player: {
+                        health: this.healthPlayer,
+                        canPickHeart: this.canPickHeart
+                    }})
+                    this.talk1 = game.cache.text.get('data2');
+                break;
+                case 'npc2': 
+                    this.npc2 = new Npc(this, x, y, "Npc2", 1)
+                    this.talk2 = game.cache.text.get('data2');
+                break;
+                case 'npc3': 
+                    this.npc3 = new Npc(this, x, y, "Npc3", 1)
+                    this.talk3 = game.cache.text.get('data3');
+                break;
+            }
+        });
+    
         this.btnPlayRunner = new Button(this, 100, 200, "btn", "Runner", 16, ()=>{this.scene.start('Runner', {player: {
             health: this.healthPlayer,
             canPickHeart: this.canPickHeart
         }})}, 0.2);
-        this.btnPlayRosas = new Button(this, 100, 300, "btn", "Rosas", 16, ()=>{this.scene.start('Rosas', {player: {
-            health: this.healthPlayer,
-            canPickHeart: this.canPickHeart
-        }})}, 0.2);
 
+;
+        
         this.physics.add.collider(this.player, paredes);
-        this.physics.add.collider(this.player, this.npc1.img, ()=>{
-            const posX = this.cameras.main.centerX;
-            const posY = this.cameras.main.centerY + this.move;
-            this.npc1.makePopUp(this, posX, posY, this.talk1)
+        this.physics.add.collider(this.player, this.npc1.img, (player, npc)=>{
+            this.physics.pause()
+            
+            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
+            setTimeout(()=>{
+                this.scene.start('Runner', {player: {
+                    health: this.healthPlayer,
+                    canPickHeart: this.canPickHeart
+                }})
+            }, 2000)
         })
-
-
-
-        /*npc1.setCollisionByProperty({collides: true});
-        npc2.setCollisionByProperty({collides: true});
-        npc3.setCollisionByProperty({cod
-        this.move = this.cameras.main.centerX/2;
-        //Colliciones//
-        this.player.setCollideWorldBounds(true);
-        this.physics.add.collider(this.player, paredes, ()=>(console.log("pum")));
-        //this.physics.add.collider(this.player, this.npc1.img, ()=>(console.log("pum")))
-        //this.physics.add.collider(this.player, this.npc2.img, ()=>(console.log("pum")))
-        
-        this.physics.add.collider(this.player, this.npc1.img, ()=>(this.npc1.makePopUp(this,this.cameras.main.centerX,
-        this.cameras.main.centerY + this.move,
-        this.talk1)))
-
-        this.physics.add.collider(this.player, this.npc2.img, ()=>(this.npc2.makePopUp(this,this.cameras.main.centerX,
-        this.cameras.main.centerY + this.move,
-        this.talk2)))
-
-        this.physics.add.collider(this.player, this.npc3.img, ()=>(this.npc3.makePopUp(this,this.cameras.main.centerX,
-        this.cameras.main.centerY + this.move,
-        this.talk3)))
-        
-        //new Button(this, 200, 50, "btn", ">", 50, ()=>{this.scene.start("MainMenu")}, .1)
-
-        
-
-
+        this.physics.add.collider(this.player, this.npc2.img, (player, npc)=>{
+            this.physics.pause()
+            
+            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
+            setTimeout(()=>{
+                this.scene.start('Rosas', {player: {
+                    health: this.healthPlayer,
+                    canPickHeart: this.canPickHeart
+                }})
+            }, 2000)
+        })
+        // this.physics.add.collider(this.player, this.npc2.img, (player, npc)=>{
+        //     this.physics.pause()
+        //     setTimeout(()=>{
+        //         this.scene.start('Runner', {player: {
+        //             health: this.healthPlayer,
+        //             canPickHeart: this.canPickHeart
+        //         }})
+        //     }, 3000)
+        // })
     }
     update(){
 
@@ -141,19 +132,16 @@ export default class Habitacion extends Phaser.Scene {
         else if (this.cursors.left.isDown == true){
                 this.player.setVelocityX(-200);
             }
-        /*else if(this.cursors.left.isDown && this.cursors.up.isDown){
-
-        }*/
-
-        /*this.physics.world.collide(this.player, this.npc3, function () {
-            console.log('popUpFunction');
-        });*/
     }
     update(){
         if(this.gameOver) {
             this.gameOver = false;
             this.healthPlayer = 5;
             this.scene.start('GameOver')
+        }
+        if(this.physics.world.isPaused) {
+            this.player.anims.play('player-idle', true);
+            return
         }
         if (this.cursors.up.isDown){
             this.player.setVelocityY(-200);
@@ -178,5 +166,24 @@ export default class Habitacion extends Phaser.Scene {
             this.player.anims.play('player-idle', true);
 
         }
+
+    }
+
+    crearPopUp(x, y){
+        this.abrirPop = true;
+        this.container = this.add.container(x, y);
+        this.graphics = this.add.graphics();
+        this.graphics.fillStyle(0x000000, 1)
+        this.graphics.fillRect(0, 0, 1200, 200)
+
+        // this.img = this.add.image(0, 0, 'book')
+        this.txt2 = this.add
+        .text(0, 0, "text", {fontSize: 100, fontStyle: 'bold' }).setInteractive({ useHandCursor: true }).on("pointerdown", () => {
+            console.log("asd")
+            this.container.visible = false;
+            this.abrirPop = false;
+        })
+
+        this.container.add([this.graphics, this.txt2])
     }
 }

@@ -39,13 +39,13 @@
 </data>
  </layer>
  <objectgroup id="3" name="objetos">
-  <object id="1" name="player" type="player" x="657.333" y="382.667">
+  <object id="1" name="player" type="player" x="664.487" y="658.102">
    <point/>
   </object>
   <object id="2" name="npc3" type="npc3" x="340" y="425.333">
    <point/>
   </object>
-  <object id="3" name="npc2" type="npc2" x="932" y="78.6667">
+  <object id="3" name="npc2" type="npc2" x="627.948" y="246.79">
    <point/>
   </object>
   <object id="4" name="npc1" type="npc1" x="1133.33" y="265.333">
