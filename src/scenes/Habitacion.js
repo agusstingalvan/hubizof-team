@@ -31,9 +31,6 @@ export default class Habitacion extends Phaser.Scene {
     preload(){}
 
     create() {
-        
-        //this.add.image(0, 0, "tile")
-        //console.log(game)
 
         const map = this.make.tilemap({ key: "habitacion" });
         const tileset = map.addTilesetImage("habitacion", "tile");
@@ -44,17 +41,6 @@ export default class Habitacion extends Phaser.Scene {
 
         paredes.setCollisionByProperty({collides: true});
         const objectsLayer = map.getObjectLayer("objetos");
-
-        this.celeste = map.findObject("objetos", (obj)=> obj.name === 'celeste');
-        
-
-
-        
-
-        
-        //Creacion de player//
-
-        
         
         
         
@@ -90,68 +76,45 @@ export default class Habitacion extends Phaser.Scene {
             }
         });
     
-        // const spawnNpc1 = map.findObject("objetos", (obj)=> obj.name === "npc1")
-       
-        //console.log(spawnNpc1.x, spawnNpc1.y)
-
-        // const spawnNpc2 = map.findObject("objetos", (obj)=> obj.name === "npc2")
-        
-
-        // const spawnNpc3 = map.findObject("objetos", (obj)=> obj.name === "npc3")
-        
-
-        const spawnPlayer = map.findObject("objetos", (obj)=> obj.name === 'player');
-        
-
         this.btnPlayRunner = new Button(this, 100, 200, "btn", "Runner", 16, ()=>{this.scene.start('Runner', {player: {
             health: this.healthPlayer,
             canPickHeart: this.canPickHeart
         }})}, 0.2);
 
+;
+        
         this.physics.add.collider(this.player, paredes);
-
-        //.body.onCollide.add(hitSprite, this);
-        
-
         this.physics.add.collider(this.player, this.npc1.img, (player, npc)=>{
-            npc.disableBody(true, false);
-            const posX = this.cameras.main.centerX;
-            const posY = this.cameras.main.centerY + this.move;
-            // this.npc1.makePopUp(this, posX, posY, this.talk1)
-            //this.botonRemove = new Button (this, 200, 500, "btn", "X", 24, ()=> {this.npc1.hidePopUp()}, .1);
-            // this.crearPopUp(400, 400)
+            this.physics.pause()
+            
+            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
+            setTimeout(()=>{
+                this.scene.start('Runner', {player: {
+                    health: this.healthPlayer,
+                    canPickHeart: this.canPickHeart
+                }})
+            }, 2000)
         })
-
-
-     
-
-        /*npc1.setCollisionByProperty({collides: true});
-        npc2.setCollisionByProperty({collides: true});
-        npc3.setCollisionByProperty({cod
-        this.move = this.cameras.main.centerX/2;
-        //Colliciones//
-        this.player.setCollideWorldBounds(true);
-        this.physics.add.collider(this.player, paredes, ()=>(console.log("pum")));
-        //this.physics.add.collider(this.player, this.npc1.img, ()=>(console.log("pum")))
-        //this.physics.add.collider(this.player, this.npc2.img, ()=>(console.log("pum")))
-        
-        this.physics.add.collider(this.player, this.npc1.img, ()=>(this.npc1.makePopUp(this,this.cameras.main.centerX,
-        this.cameras.main.centerY + this.move,
-        this.talk1)))
-
-        this.physics.add.collider(this.player, this.npc2.img, ()=>(this.npc2.makePopUp(this,this.cameras.main.centerX,
-        this.cameras.main.centerY + this.move,
-        this.talk2)))
-
-        this.physics.add.collider(this.player, this.npc3.img, ()=>(this.npc3.makePopUp(this,this.cameras.main.centerX,
-        this.cameras.main.centerY + this.move,
-        this.talk3)))
-        
-        //new Button(this, 200, 50, "btn", ">", 50, ()=>{this.scene.start("MainMenu")}, .1)
-
-        
-
-
+        this.physics.add.collider(this.player, this.npc2.img, (player, npc)=>{
+            this.physics.pause()
+            
+            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
+            setTimeout(()=>{
+                this.scene.start('Rosas', {player: {
+                    health: this.healthPlayer,
+                    canPickHeart: this.canPickHeart
+                }})
+            }, 2000)
+        })
+        // this.physics.add.collider(this.player, this.npc2.img, (player, npc)=>{
+        //     this.physics.pause()
+        //     setTimeout(()=>{
+        //         this.scene.start('Runner', {player: {
+        //             health: this.healthPlayer,
+        //             canPickHeart: this.canPickHeart
+        //         }})
+        //     }, 3000)
+        // })
     }
     update(){
 
@@ -171,33 +134,18 @@ export default class Habitacion extends Phaser.Scene {
         else if (this.cursors.left.isDown == true){
                 this.player.setVelocityX(-200);
             }
-        /*else if(this.cursors.left.isDown && this.cursors.up.isDown){
-
-        }*/
-
-        /*this.physics.world.collide(this.player, this.npc3, function () {
-            console.log('popUpFunction');
-        });*/
     }
 
     update(){
-
-        /*if (this.lis1 === false){
-            this.npc1.hidePopUp(false);
-        }else{
-            const posX = this.cameras.main.centerX;
-            const posY = this.cameras.main.centerY + this.move;
-            this.npc1.makePopUp(this, posX, posY, this.talk1)
-        }*/
-
-
-        
-
-
+  
         if(this.gameOver) {
             this.gameOver = false;
             this.healthPlayer = 5;
             this.scene.start('GameOver')
+        }
+        if(this.physics.world.isPaused) {
+            this.player.anims.play('player-idle', true);
+            return
         }
         if (this.cursors.up.isDown){
             this.player.setVelocityY(-200);
@@ -223,15 +171,6 @@ export default class Habitacion extends Phaser.Scene {
 
         }
 
-        // if(this.abrirPop){
-        //     this.npc1.img.enableBody(
-        //         true,
-        //         this.npc1.x,
-        //         this.npc1.y,
-        //         true,
-        //         false
-        //     );
-        // }
     }
 
     crearPopUp(x, y){

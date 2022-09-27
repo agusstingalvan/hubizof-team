@@ -8,8 +8,10 @@ export class Npc {
         this.nameNextScene = nameNextScene;
         this.configNextScene = config;
 
-        this.img = scene.physics.add.staticImage(x, y, texture)
+        this.img = scene.physics.add.image(x, y, texture)
         .setScale(scale)
+        this.img.body.allowGravity = false;
+        this.img.body.setImmovable();
         this.img.refreshBody()
     }
 
