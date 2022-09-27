@@ -1,6 +1,6 @@
 export default class Button {
     constructor(scene, x, y, texture, text, size = 16, callback, scale) {
-        console.log(scene)
+        //console.log(scene)
         this.container = scene.add.container(x, y);
         
 
@@ -20,5 +20,9 @@ export default class Button {
 
     colorFondo(color){
         this.txt.setBackgroundColor(color);
+    }
+
+    visible(){
+        this.container.visible = false;
     }
 }

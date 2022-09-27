@@ -3,6 +3,7 @@ import { PopUp } from "../functions/PopUp.js";
 export class Npc {
     nameNextScene;
     configNextScene;
+    
     constructor(scene, x, y, texture, scale, nameNextScene, config){
         this.nameNextScene = nameNextScene;
         this.configNextScene = config;
@@ -13,8 +14,14 @@ export class Npc {
     }
 
     makePopUp(scene,x ,y, text){
-        new PopUp(scene,x, y, text, 0x808012, this.nameNextScene, this.configNextScene)
+        this.pop = new PopUp(scene,x, y, text, 0x808012, this.nameNextScene, this.configNextScene)
     }
+
+    // hidePopUp(){
+    //     // scene.this.pop.container.visible=false;
+    //     // scene.this.pop.botonMini.container.visible=false;
+    //     this.pop.invisible();
+    // }
 
 
 

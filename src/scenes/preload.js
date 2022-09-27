@@ -59,7 +59,7 @@ export default class Preload extends Phaser.Scene {
     create() {
         const {width, heigth} = this.scale;
         this.add.text(500 , 500, 'Cargando')
-        this.scene.start("MainMenu");
+        this.scene.start("Habitacion");
 
         this.anims.create({
             key: "player-idle",

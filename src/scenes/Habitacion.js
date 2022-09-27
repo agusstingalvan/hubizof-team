@@ -7,6 +7,8 @@ export default class Habitacion extends Phaser.Scene {
     healthPlayer;
     canPickHeart = true;
 
+    
+
     init(data){
         this.anims.pauseAll()
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -31,6 +33,7 @@ export default class Habitacion extends Phaser.Scene {
     create() {
         
         //this.add.image(0, 0, "tile")
+        //console.log(game)
 
         const map = this.make.tilemap({ key: "habitacion" });
         const tileset = map.addTilesetImage("habitacion", "tile");
@@ -49,6 +52,8 @@ export default class Habitacion extends Phaser.Scene {
 
         
         //Creacion de player//
+
+        
         
         
         
@@ -60,6 +65,7 @@ export default class Habitacion extends Phaser.Scene {
             canPickHeart: this.canPickHeart
         }})
         this.talk1 = game.cache.text.get('data2');
+        //console.log(spawnNpc1.x, spawnNpc1.y)
 
         const spawnNpc2 = map.findObject("objetos", (obj)=> obj.name === "npc2")
         this.npc2 = new Npc(this, spawnNpc2.x, spawnNpc2.y, "Npc2", 1)
@@ -83,11 +89,18 @@ export default class Habitacion extends Phaser.Scene {
         }})}, 0.2);
 
         this.physics.add.collider(this.player, paredes, ()=>(console.log("pum")));
+
+        //.body.onCollide.add(hitSprite, this);
+        
+
         this.physics.add.collider(this.player, this.npc1.img, ()=>{
             const posX = this.cameras.main.centerX;
             const posY = this.cameras.main.centerY + this.move;
             this.npc1.makePopUp(this, posX, posY, this.talk1)
+            //this.botonRemove = new Button (this, 200, 500, "btn", "X", 24, ()=> {this.npc1.hidePopUp()}, .1);
         })
+
+
 
 
 
@@ -145,7 +158,21 @@ export default class Habitacion extends Phaser.Scene {
             console.log('popUpFunction');
         });*/
     }
+
     update(){
+
+        /*if (this.lis1 === false){
+            this.npc1.hidePopUp(false);
+        }else{
+            const posX = this.cameras.main.centerX;
+            const posY = this.cameras.main.centerY + this.move;
+            this.npc1.makePopUp(this, posX, posY, this.talk1)
+        }*/
+
+
+        
+
+
         if(this.gameOver) {
             this.gameOver = false;
             this.healthPlayer = 5;
