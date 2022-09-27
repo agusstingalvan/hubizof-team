@@ -1,5 +1,4 @@
 
-
 export default class GameOver extends Phaser.Scene {
     constructor() {
         super("GameOver");
@@ -9,7 +8,9 @@ export default class GameOver extends Phaser.Scene {
     preload(){}
 
     create() {
-        this.add.text(500, 500,'Perdiste el juego GAME OVERR!!!')
+
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "finB")
+        this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,'GAMEOVER', {fontStyle: 'bold', fontSize: 64} ).setOrigin(.5)
     }
     update(){
        

@@ -1,4 +1,3 @@
-import { PopUp } from "../functions/PopUp.js";
 
 export class Npc {
     nameNextScene;
@@ -19,20 +18,3 @@ export class Npc {
 
 
 }
-
-
-
-
-
-/*let tile = this.add.image(200, 200, "btn").setScale(.2)
-
-        
-        let tween = this.tweens.add({
-            targets: tile,
-            x: 600,
-            y:600,
-            scaleY:.6,
-            scaleX:1.2,
-            ease: 'Power1',
-            duration: 2000,
-        });*/

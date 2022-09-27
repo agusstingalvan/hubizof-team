@@ -19,7 +19,6 @@ export default class Rosas extends Phaser.Scene{
         super('Rosas')
     }
     init(data){
-        console.log('estas en Rosas')
         this.anims.resumeAll()
         this.tweens.resumeAll()
         this.gameOver = false;
@@ -27,7 +26,6 @@ export default class Rosas extends Phaser.Scene{
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
         this.canPickHeart = data.player.canPickHeart;
         this.countStar = data.player.countStar;
-        console.log(data.player.countStar)
         this.tiempo = 60;
         if(!data.player.health) return;
         if(data.player.health) {
@@ -266,11 +264,7 @@ export default class Rosas extends Phaser.Scene{
         //     this.scene.start('GameOver')
         // }
         if (this.tiempo <= 0 && this.player.health >= 1 && this.countStar <= 2) {
-            // this.gameOver = true;
-            // this.scene.stop('UI');
-            // this.scene.stop('Habitacion');
-            // this.scene.stop(this);
-            // this.scene.start('GameOver')
+            //Si sobrevivis el tiempo, sumas una estrella y el HABITACION te manda a la escena GANAR
             if(this.countStar <= 2) ++this.countStar;
             this.scene.stop('UI');
             this.scene.stop(this);

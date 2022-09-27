@@ -831,7 +831,7 @@
   <object id="3" name="npc2" type="npc2" x="627.948" y="246.79">
    <point/>
   </object>
-  <object id="4" name="npc1" type="npc1" x="1083.33" y="249.333">
+  <object id="4" name="npc1" type="npc1" x="1034.33" y="336.333">
    <point/>
   </object>
  </objectgroup>

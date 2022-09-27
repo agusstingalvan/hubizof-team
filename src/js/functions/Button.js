@@ -9,6 +9,7 @@ export default class Button {
         .on('pointerover', () => this.img.setTint(0xFFFF))
         .on('pointerout',() => this.img.clearTint())
         .on("pointerdown", () => callback())
+        .setScale(scale)
         
 
         this.txt = scene.add.text(0, 0, text, {fontSize: size, fontStyle: 'bold'}).setOrigin(0.5);

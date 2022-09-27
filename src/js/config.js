@@ -6,6 +6,8 @@ import UI from "../scenes/UI.js";
 import GameOver from "../scenes/GameOver.js";
 import Habitacion from "../scenes/Habitacion.js";
 import Rosas from "../scenes/Rosas.js";
+import Victoria from "../scenes/Victoria.js";
+import Creditos from "../scenes/Creditos.js"
 
 
 export const config = {
@@ -35,10 +37,12 @@ export const config = {
     scene: [
         Preload,
         MainMenu,
+        Creditos,
         Habitacion,
         Runner,
         Rosas,
         UI,
-        GameOver
+        GameOver,
+        Victoria
     ],
 };
