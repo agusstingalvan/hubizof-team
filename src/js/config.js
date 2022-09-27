@@ -1,5 +1,5 @@
 
-import Preload from "../scenes/Preload.js";
+import Preload from "../scenes/preload.js";
 import MainMenu from "../scenes/MainMenu.js";
 import Runner from "../scenes/Runner.js";
 
