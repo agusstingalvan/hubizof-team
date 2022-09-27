@@ -19,6 +19,7 @@ export default class Rosas extends Phaser.Scene{
         super('Rosas')
     }
     init(data){
+        this.sonidos = data.sonidos;
         this.anims.resumeAll()
         this.tweens.resumeAll()
         this.gameOver = false;
@@ -34,6 +35,7 @@ export default class Rosas extends Phaser.Scene{
     }
     create(){
         this.scene.launch("UI", {player: { health: this.healthPlayer}});
+        this.sonidos.sound.musicIra.play();
         const map = this.make.tilemap({key: "rosas"});
 
         const tiled = map.addTilesetImage("rosas-map", "rosas-map");
@@ -180,6 +182,7 @@ export default class Rosas extends Phaser.Scene{
         this.physics.world.setBoundsCollision(true, true, true, false);
     }
     hitPlayer(){
+        this.sonidos.sound.deathSFX.play();
         this.physics.pause();
         this.player.setTint(0xff0000);
         this.anims.pauseAll();
@@ -192,6 +195,8 @@ export default class Rosas extends Phaser.Scene{
         }, 4000)
     }
     isGameOver(){
+        this.sonidos.sound.musicIra.stop();
+        this.sonidos.sound.musicMenu.play();
         this.gameOver = false;
         this.scene.stop('UI');
         this.scene.stop(this);
@@ -199,7 +204,8 @@ export default class Rosas extends Phaser.Scene{
             player: {
                 health: this.player.health,
                 canPickHeart: this.canPickHeart
-            }
+            },
+            sonidos: this.sonidos
         })
     }
     update(){

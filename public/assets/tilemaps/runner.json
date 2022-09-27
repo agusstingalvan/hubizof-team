@@ -629,15 +629,15 @@
                 }, 
                 {
                  "height":0,
-                 "id":81,
+                 "id":84,
                  "name":"player",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":339,
-                 "y":571
+                 "x":70.6666666666667,
+                 "y":569.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -646,7 +646,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":83,
+ "nextobjectid":85,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.5",

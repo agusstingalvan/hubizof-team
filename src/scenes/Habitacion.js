@@ -1,3 +1,4 @@
+import SoundsManage from "../js/functions/SoundsManage.js";
 import { Npc } from "../js/objects/Npc.js";
 import Player from "../js/objects/Player.js";
 
@@ -7,6 +8,7 @@ export default class Habitacion extends Phaser.Scene {
     canPickHeart = true;
     countStar = 0;
     init(data){
+        this.sonidos = data.sonidos;
         this.anims.pauseAll()
         this.cursors = this.input.keyboard.createCursorKeys();
         if(!data.player) return 
@@ -24,10 +26,8 @@ export default class Habitacion extends Phaser.Scene {
         super("Habitacion");
     }
 
-    
-    preload(){}
-
     create() {
+        
 
         const map = this.make.tilemap({ key: "habitacion" });
         const tileset = map.addTilesetImage("habitacion", "tile");
@@ -78,11 +78,14 @@ export default class Habitacion extends Phaser.Scene {
             
             const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
             setTimeout(()=>{
+                this.sonidos.sound.musicMenu.stop()
                 this.scene.start('Runner', {player: {
                     health: this.healthPlayer,
                     canPickHeart: this.canPickHeart,
                     countStar: this.countStar
-                }})
+                },
+                sonidos: this.sonidos
+            })
             }, 2000)
         })
         this.physics.add.collider(this.player, this.npc2.img, (player, npc)=>{
@@ -90,11 +93,14 @@ export default class Habitacion extends Phaser.Scene {
             
             const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
             setTimeout(()=>{
+                this.sonidos.sound.musicMenu.stop()
                 this.scene.start('Rosas', {player: {
                     health: this.healthPlayer,
                     canPickHeart: this.canPickHeart,
                     countStar: this.countStar
-                }})
+                },
+                sonidos: this.sonidos
+            })
             }, 2000)
         })
     }
@@ -153,6 +159,8 @@ export default class Habitacion extends Phaser.Scene {
         ///Si gana el jugador
         if(this.countStar === 2){
             this.scene.stop(this);
+            this.sonidos.sound.winSFX.volume = 2;
+            this.sonidos.sound.winSFX.play();
             this.scene.start('Victoria')
         }
 

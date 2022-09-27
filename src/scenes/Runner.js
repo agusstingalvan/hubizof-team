@@ -20,6 +20,7 @@ export default class Runner extends Phaser.Scene{
     }
     init(data){
         // console.log('estas en runner')
+        this.sonidos = data.sonidos; 
         this.anims.resumeAll();
         this.tweens.resumeAll()
         this.gameOver = false;
@@ -35,6 +36,7 @@ export default class Runner extends Phaser.Scene{
     }
     create(){
         this.scene.launch("UI", {player: { health: this.healthPlayer}});
+        this.sonidos.sound.musicRunner.play();
         const map = this.make.tilemap({key: "runner"});
         // const tiledGround = map.addTilesetImage("ground", "ground");
 
@@ -147,6 +149,7 @@ export default class Runner extends Phaser.Scene{
         //Cuando agarras el chocolate
         this.physics.add.overlap(this.player, this.chocolatesGroup, (player, chocolate)=>{
             if(this.player.health === 5) return; 
+            this.sonidos.sound.chocolateSFX.play();
             if(this.player.health < 5 && this.canPickHeart){
                 // console.log('YESSS')
                 this.player.health = this.player.health + 1;
@@ -158,13 +161,15 @@ export default class Runner extends Phaser.Scene{
         //Cuando choca con la estrella
         this.physics.add.overlap(this.player, this.star, (player, star)=>{
             if(this.countStar <= 2) ++this.countStar;
+            this.sonidos.sound.estrellaSFX.play();
             this.scene.stop('UI');
             this.scene.stop(this);
             this.scene.start('Habitacion', {
                 player: {
                     health: this.player.health,
                     countStar: this.countStar
-                }
+                },
+                sonidos: this.sonidos
             });
         });
         //Cuando choca con obstaculo
@@ -202,6 +207,7 @@ export default class Runner extends Phaser.Scene{
 
     }
     hitPlayer(){
+        this.sonidos.sound.deathSFX.play();
         this.physics.pause()
         this.player.anims.stop()
         this.tweens.pauseAll()
@@ -213,6 +219,8 @@ export default class Runner extends Phaser.Scene{
         }, 4000)
     }
     isGameOver(){
+        this.sonidos.sound.musicRunner.stop();
+        this.sonidos.sound.musicMenu.play();
         this.gameOver = false;
         this.scene.stop('UI');
         this.scene.stop(this);
@@ -220,7 +228,8 @@ export default class Runner extends Phaser.Scene{
             player: {
                 health: this.player.health,
                 canPickHeart: this.canPickHeart
-            }
+            },
+            sonidos: this.sonidos
         })
     }
     update(){

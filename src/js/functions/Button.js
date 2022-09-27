@@ -6,7 +6,7 @@ export default class Button {
 
         this.img = scene.add.image(0, 0, texture)
         .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => this.img.setTint(0xFFFF))
+        .on('pointerover', () => this.img.setTint(0xCECECE))
         .on('pointerout',() => this.img.clearTint())
         .on("pointerdown", () => callback())
         .setScale(scale)
