@@ -6,7 +6,7 @@ export default class Habitacion extends Phaser.Scene {
     gameOver = false;
     healthPlayer;
     canPickHeart = true;
-
+    abrirPop = true;
     
 
     init(data){
@@ -43,6 +43,7 @@ export default class Habitacion extends Phaser.Scene {
         
 
         paredes.setCollisionByProperty({collides: true});
+        const objectsLayer = map.getObjectLayer("objetos");
 
         this.celeste = map.findObject("objetos", (obj)=> obj.name === 'celeste');
         
@@ -59,50 +60,70 @@ export default class Habitacion extends Phaser.Scene {
         
 
         //Personajes no jugables//
-        const spawnNpc1 = map.findObject("objetos", (obj)=> obj.name === "npc1")
-        this.npc1 = new Npc(this, spawnNpc1.x, spawnNpc1.y, "Npc1", 1, "Runner", {player: {
-            health: this.healthPlayer,
-            canPickHeart: this.canPickHeart
-        }})
-        this.talk1 = game.cache.text.get('data2');
+        objectsLayer.objects.forEach(objData => {
+            const {x, y, name} = objData;
+
+            switch(name){
+                case 'player':
+                    this.player = new Player(this, x, y, "player-static");
+                    this.anims.resumeAll()
+                    this.player.anims.play('player-idle');
+                    this.player.setScale(2)
+                    this.player.refreshBody()
+                    this.player.body.allowGravity = false;
+                    break;
+                case 'npc1': 
+                    this.npc1 = new Npc(this, x, y, "Npc1", 1, "Runner", {player: {
+                        health: this.healthPlayer,
+                        canPickHeart: this.canPickHeart
+                    }})
+                    this.talk1 = game.cache.text.get('data2');
+                break;
+                case 'npc2': 
+                    this.npc2 = new Npc(this, x, y, "Npc2", 1)
+                    this.talk2 = game.cache.text.get('data2');
+                break;
+                case 'npc3': 
+                    this.npc3 = new Npc(this, x, y, "Npc3", 1)
+                    this.talk3 = game.cache.text.get('data3');
+                break;
+            }
+        });
+    
+        // const spawnNpc1 = map.findObject("objetos", (obj)=> obj.name === "npc1")
+       
         //console.log(spawnNpc1.x, spawnNpc1.y)
 
-        const spawnNpc2 = map.findObject("objetos", (obj)=> obj.name === "npc2")
-        this.npc2 = new Npc(this, spawnNpc2.x, spawnNpc2.y, "Npc2", 1)
-        this.talk2 = game.cache.text.get('data2');
+        // const spawnNpc2 = map.findObject("objetos", (obj)=> obj.name === "npc2")
+        
 
-        const spawnNpc3 = map.findObject("objetos", (obj)=> obj.name === "npc3")
-        this.npc3 = new Npc(this, spawnNpc3.x, spawnNpc3.y, "Npc3", 1)
-        this.talk3 = game.cache.text.get('data3');
+        // const spawnNpc3 = map.findObject("objetos", (obj)=> obj.name === "npc3")
+        
 
         const spawnPlayer = map.findObject("objetos", (obj)=> obj.name === 'player');
-        this.player = new Player(this, spawnPlayer.x, spawnPlayer.y, "player-static");
-        this.anims.resumeAll()
-        this.player.anims.play('player-idle');
-        this.player.setScale(2)
-        this.player.refreshBody()
-        this.player.body.allowGravity = false;
+        
 
         this.btnPlayRunner = new Button(this, 100, 200, "btn", "Runner", 16, ()=>{this.scene.start('Runner', {player: {
             health: this.healthPlayer,
             canPickHeart: this.canPickHeart
         }})}, 0.2);
 
-        this.physics.add.collider(this.player, paredes, ()=>(console.log("pum")));
+        this.physics.add.collider(this.player, paredes);
 
         //.body.onCollide.add(hitSprite, this);
         
 
-        this.physics.add.collider(this.player, this.npc1.img, ()=>{
+        this.physics.add.collider(this.player, this.npc1.img, (player, npc)=>{
+            npc.disableBody(true, false);
             const posX = this.cameras.main.centerX;
             const posY = this.cameras.main.centerY + this.move;
-            this.npc1.makePopUp(this, posX, posY, this.talk1)
+            // this.npc1.makePopUp(this, posX, posY, this.talk1)
             //this.botonRemove = new Button (this, 200, 500, "btn", "X", 24, ()=> {this.npc1.hidePopUp()}, .1);
+            // this.crearPopUp(400, 400)
         })
 
 
-
-
+     
 
         /*npc1.setCollisionByProperty({collides: true});
         npc2.setCollisionByProperty({collides: true});
@@ -201,5 +222,33 @@ export default class Habitacion extends Phaser.Scene {
             this.player.anims.play('player-idle', true);
 
         }
+
+        // if(this.abrirPop){
+        //     this.npc1.img.enableBody(
+        //         true,
+        //         this.npc1.x,
+        //         this.npc1.y,
+        //         true,
+        //         false
+        //     );
+        // }
+    }
+
+    crearPopUp(x, y){
+        this.abrirPop = true;
+        this.container = this.add.container(x, y);
+        this.graphics = this.add.graphics();
+        this.graphics.fillStyle(0x000000, 1)
+        this.graphics.fillRect(0, 0, 1200, 200)
+
+        // this.img = this.add.image(0, 0, 'book')
+        this.txt2 = this.add
+        .text(0, 0, "text", {fontSize: 100, fontStyle: 'bold' }).setInteractive({ useHandCursor: true }).on("pointerdown", () => {
+            console.log("asd")
+            this.container.visible = false;
+            this.abrirPop = false;
+        })
+
+        this.container.add([this.graphics, this.txt2])
     }
 }

@@ -21,70 +21,32 @@ export class PopUp{
         this.graphics = scene.add.graphics();
         this.graphics.fillStyle(0x000000, 1)
         this.graphics.fillRect(-this.xx, -this.yy, 1200, 200)
-        //console.log(this.yy,this.xx, this.yyy)
 
 
-
-        /*this.txt = scene.add
-        .text(300, 100, text, {fontSize: 30, fontStyle: 'bold'})
-        .setOrigin(0.5);*/
-
-        // this.container.add([this.graphics, this.txt]);
-
-        /*this.container = scene.add.container(x, y);
-        console.log(this.container)
-        
-        this.graphics = scene.add.graphics();
-    
-        this.graphics.fillStyle(color, 1);
-        this.graphics.fillRect(0, 0, 600, 200);
-
-        this.txt = scene.add
-        .text(300, 100, text, {fontSize: 30, fontStyle: 'bold'})
-        .setOrigin(0.5);
-
-        this.container.add([this.graphics, this.txt]);*/
-
-        
-        /*this.tile = scene.add.image(x, y, "btn").setScale(.2)*/
-        //this.container = scene.add.container(x, y)
-
-        //this.tile = scene.add.image(0, 0, "btn").setScale(.7)
-        
         this.txt = scene.add
         .text(0, -this.yyy, text, {fontSize: 100, fontStyle: 'bold' })
         .setOrigin(.5)
         .setScale(.3)
 
-        this.containerPad = scene.add.container(this.centroX, this.centroY+this.move);
+        // this.containerPad = scene.add.container(this.centroX, this.centroY+this.move);
         
 
-        this.botonMini = new Button (scene, this.centroX+200, this.centroY+this.move, "btn", "Acepto", 24, ()=> {scene.scene.start(nameNextScene, configNextScene)}, .1);
+        // this.botonMini = new Button (scene, this.centroX+200, this.centroY+this.move, "btn", "Acepto", 24, ()=> {scene.scene.start(nameNextScene, configNextScene)}, .1);
 
         
 
 
-        this.botonRemove = new Button (scene, 300, this.centroY+this.move, "btn", "X", 24, ()=> {this.invisible()}, .1);
+        // this.botonRemove = new Button (scene, 300, this.centroY+this.move, "btn", "X", 24, ()=> {this.invisible()}, .1);
         
-        this.container.add([this.graphics, this.txt])
-
+        
         this.txt2 = scene.add
         .text(0, 500, "text", {fontSize: 100, fontStyle: 'bold' }).setInteractive({ useHandCursor: true }).on("pointerdown", () => {
             console.log("asd")
-            this.container._visible = true;
-            this.container.active = false;
             console.log(this.container)
-
+            this.container.visible = false;
         })
-        //this.containerPad.add([this.botonMini,this.botonRemove])
-
-        //para esderpopup
-
-        /*this.container.visible = false;
-        this.botonMini.visible();*/
-        //this.container.add(this.tile)
-        //this.container.add(this.graphics)
-        //this.container.add(this.txt)
+        
+        this.container.add([this.graphics, this.txt])
     }
 
     invisible(){
