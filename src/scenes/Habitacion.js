@@ -76,7 +76,7 @@ export default class Habitacion extends Phaser.Scene {
         this.physics.add.collider(this.player, this.npc1.img, (player, npc)=>{
             this.physics.pause()
             
-            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
+            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...', {fontFamily: 'Open Sans', fontSize: 20, fontStyle: 'bold'})
             setTimeout(()=>{
                 this.sonidos.sound.musicMenu.stop()
                 this.scene.start('Runner', {player: {
@@ -91,7 +91,7 @@ export default class Habitacion extends Phaser.Scene {
         this.physics.add.collider(this.player, this.npc2.img, (player, npc)=>{
             this.physics.pause()
             
-            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...')
+            const txt = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Cargando...', {fontFamily: 'Open Sans', fontSize: 20, fontStyle: 'bold'})
             setTimeout(()=>{
                 this.sonidos.sound.musicMenu.stop()
                 this.scene.start('Rosas', {player: {

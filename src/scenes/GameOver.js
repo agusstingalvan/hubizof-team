@@ -10,9 +10,6 @@ export default class GameOver extends Phaser.Scene {
     create() {
 
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "finB")
-        this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,'GAMEOVER', {fontStyle: 'bold', fontSize: 64} ).setOrigin(.5)
-    }
-    update(){
-       
+        this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,'GAMEOVER', {fontStyle: 'bold', fontSize: 64, fontFamily: 'Open Sans'} ).setOrigin(.5)
     }
 }

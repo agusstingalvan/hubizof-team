@@ -1,5 +1,5 @@
 
-import Preload from "../scenes/preload.js";
+import Preload from "../scenes/Preload.js";
 import MainMenu from "../scenes/MainMenu.js";
 import Runner from "../scenes/Runner.js";
 import UI from "../scenes/UI.js";
@@ -31,7 +31,7 @@ export const config = {
         default: "arcade",
         arcade: {
             gravity: { y: 300 },
-            debug: true,
+            debug: false,
         },
     },
     scene: [
