@@ -20,11 +20,13 @@ export default class Runner extends Phaser.Scene{
     }
     init(data){
         // console.log('estas en runner')
-        this.anims.resumeAll()
+        this.anims.resumeAll();
+        this.tweens.resumeAll()
         this.gameOver = false;
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
         this.canPickHeart = data.player.canPickHeart;
+        this.countStar = data.player.countStar;
         if(!data.player.health) return;
         if(data.player.health) {
             this.healthPlayer = data.player.health;
@@ -81,6 +83,10 @@ export default class Runner extends Phaser.Scene{
                 case 'spike':
                         this.spikesGroup.create(x, y, 'spike');
                 break;
+                case 'spike-rot':
+                        const spike = this.spikesGroup.create(x, y, 'spike');
+                        spike.setFlipY(true)
+                break;
                 case 'chocolate':
                     if(this.canPickHeart) this.chocolatesGroup.create(x, y, 'chocolate');
                 break;
@@ -88,11 +94,11 @@ export default class Runner extends Phaser.Scene{
                     // this.chocolatesGroup.create(x, y, 'star');
                     this.star = this.physics.add.image(x, y, 'star');
                     this.star.body.allowGravity = false;
-                    this.star.setScale(2.5);
+                    this.star.setScale(1.8);
 
                     this.tweens.add({
                         targets: this.star,
-                        y: 400,
+                        y: 500,
                         ease: "Sine.easeInOut",
                         duration: 900,
                         yoyo: true,
@@ -151,11 +157,13 @@ export default class Runner extends Phaser.Scene{
         });
         //Cuando choca con la estrella
         this.physics.add.overlap(this.player, this.star, (player, star)=>{
+            if(this.countStar <= 2) ++this.countStar;
             this.scene.stop('UI');
             this.scene.stop(this);
             this.scene.start('Habitacion', {
                 player: {
-                    health: this.player.health
+                    health: this.player.health,
+                    countStar: this.countStar
                 }
             });
         });
@@ -196,6 +204,8 @@ export default class Runner extends Phaser.Scene{
     hitPlayer(){
         this.physics.pause()
         this.player.anims.stop()
+        this.tweens.pauseAll()
+        this.anims.pauseAll();
         this.player.removeHealth();
         this.scene.launch('UI', {player:{health: this.player.health}})
         setTimeout(()=>{

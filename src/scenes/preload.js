@@ -32,6 +32,8 @@ export default class Preload extends Phaser.Scene {
         this.load.image('chocolate', 'public/assets/runner/chocolate.png');
         this.load.image('player-static', 'public/assets/player-static.png');
         this.load.spritesheet('player-spritesheet', 'public/assets/player-spritesheet.png', {frameWidth: 64, frameHeight: 64})
+        this.load.image('player-lunar', 'public/assets/player-lunar.png');
+        this.load.spritesheet('player-lunar-spritesheet', 'public/assets/player-lunar-spritesheet.png', {frameWidth: 128, frameHeight: 256})
         this.load.atlas('atlas-hearts', 'public/assets/UI/hearts.png', 'public/assets/UI/hearts.json')
         this.load.image('enemy-anxiety', 'public/assets/runner/enemy-static.png');
         this.load.spritesheet('enemy-anxiety-spritesheet', 'public/assets/runner/enemy.png', {frameWidth: 64, frameHeight: 64})
@@ -52,8 +54,8 @@ export default class Preload extends Phaser.Scene {
         this.load.spritesheet('balls-fire-spritesheet', 'public/assets/rosas/balls-fire.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('book-ira-static', 'public/assets/rosas/book-ira-static.png');
         this.load.spritesheet('book-ira-spritesheet', 'public/assets/rosas/book-ira.png', {frameWidth: 64, frameHeight: 64});
-        this.load.image('mueble-static', 'public/assets/rosas/book-ira-static.png');
-        this.load.spritesheet('mueble-spritesheet', 'public/assets/rosas/book-ira.png', {frameWidth: 133, frameHeight: 107});
+        this.load.image('mueble-static', 'public/assets/rosas/mueble-static.png');
+        this.load.spritesheet('mueble-spritesheet', 'public/assets/rosas/mueble.png', {frameWidth: 133, frameHeight: 107});
     }
 
     create() {
@@ -72,6 +74,39 @@ export default class Preload extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers("player-spritesheet", {
                 start: 6,
                 end: 10,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "player-lunar-idle",
+            frames: [{ key: 'player-lunar-spritesheet', frame: 4 }],
+            frameRate: 12,
+            repeat: 1,
+        });
+        this.anims.create({
+            key: "player-lunar-back",
+            frames: this.anims.generateFrameNumbers("player-lunar-spritesheet", {
+                start: 0,
+                end: 3,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "player-lunar-front",
+            frames: this.anims.generateFrameNumbers("player-lunar-spritesheet", {
+                start: 5,
+                end: 6,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "player-lunar-right",
+            frames: this.anims.generateFrameNumbers("player-lunar-spritesheet", {
+                start: 7,
+                end: 15,
             }),
             frameRate: 12,
             repeat: -1,
@@ -127,6 +162,15 @@ export default class Preload extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers("book-ira-spritesheet", {
                 start: 0,
                 end: 6,
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "mueble-anims",
+            frames: this.anims.generateFrameNumbers("mueble-spritesheet", {
+                start: 0,
+                end: 8,
             }),
             frameRate: 12,
             repeat: -1,

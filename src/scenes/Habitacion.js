@@ -6,11 +6,12 @@ export default class Habitacion extends Phaser.Scene {
     gameOver = false;
     healthPlayer;
     canPickHeart = true;
-
+    countStar = 0;
     init(data){
         this.anims.pauseAll()
         this.cursors = this.input.keyboard.createCursorKeys();
         if(!data.player) return 
+        this.countStar = (data.player.countStar)? data.player.countStar : this.countStar;
         if(data.player.health === 0){
             this.gameOver = true;
         }
@@ -35,9 +36,8 @@ export default class Habitacion extends Phaser.Scene {
 
         map.createStaticLayer("piso", tileset)
         const paredes = map.createLayer("paredes", tileset)
-        
-
         paredes.setCollisionByProperty({collides: true});
+
         const objectsLayer = map.getObjectLayer("objetos");
         
         
@@ -49,10 +49,10 @@ export default class Habitacion extends Phaser.Scene {
 
             switch(name){
                 case 'player':
-                    this.player = new Player(this, x, y, "player-static");
+                    this.player = new Player(this, x, y, "player-lunar");
                     this.anims.resumeAll()
                     this.player.anims.play('player-idle');
-                    this.player.setScale(2)
+                    this.player.setScale(0.8)
                     this.player.refreshBody()
                     this.player.body.allowGravity = false;
                     break;
@@ -89,7 +89,8 @@ export default class Habitacion extends Phaser.Scene {
             setTimeout(()=>{
                 this.scene.start('Runner', {player: {
                     health: this.healthPlayer,
-                    canPickHeart: this.canPickHeart
+                    canPickHeart: this.canPickHeart,
+                    countStar: this.countStar
                 }})
             }, 2000)
         })
@@ -100,7 +101,8 @@ export default class Habitacion extends Phaser.Scene {
             setTimeout(()=>{
                 this.scene.start('Rosas', {player: {
                     health: this.healthPlayer,
-                    canPickHeart: this.canPickHeart
+                    canPickHeart: this.canPickHeart,
+                    countStar: this.countStar
                 }})
             }, 2000)
         })
@@ -140,31 +142,36 @@ export default class Habitacion extends Phaser.Scene {
             this.scene.start('GameOver')
         }
         if(this.physics.world.isPaused) {
-            this.player.anims.play('player-idle', true);
+            this.player.anims.play('player-lunar-idle', true);
             return
         }
         if (this.cursors.up.isDown){
             this.player.setVelocityY(-200);
-            // this.player.anims.play('player-runner', true);
+            this.player.anims.play('player-lunar-back', true);
         }
         else if (this.cursors.down.isDown){
             this.player.setVelocityY(200);
-            // this.player.anims.play('player-runner', true);
+            this.player.anims.play('player-lunar-front', true);
         }
         else if (this.cursors.right.isDown){
             this.player.setVelocityX(200); 
-            this.player.anims.play('player-runner', true);
+            this.player.anims.play('player-lunar-right', true);
             this.player.setFlipX(false)
         } 
         else if (this.cursors.left.isDown){
             this.player.setVelocityX(-200);
-            this.player.anims.play('player-runner', true);
+            this.player.anims.play('player-lunar-right', true);
             this.player.setFlipX(true)
         }else{
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
-            this.player.anims.play('player-idle', true);
+            this.player.anims.play('player-lunar-idle', true);
+        }
 
+        ///Si gana el jugador
+        if(this.countStar === 2){
+            this.scene.stop(this);
+            this.scene.start('Victoria')
         }
 
     }
@@ -183,7 +190,6 @@ export default class Habitacion extends Phaser.Scene {
             this.container.visible = false;
             this.abrirPop = false;
         })
-
         this.container.add([this.graphics, this.txt2])
     }
 }

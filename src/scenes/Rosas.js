@@ -1,6 +1,4 @@
-import Button from "../js/functions/Button.js";
 import EnemyRunner from "../js/objects/EnemyRunner.js";
-import ObstacleRunner from "../js/objects/ObstacleRunner.js";
 import Player from "../js/objects/Player.js";
 
 
@@ -16,16 +14,21 @@ export default class Rosas extends Phaser.Scene{
     chocolatesGroup;
     canPickHeart; //Dato que viene desde Habitación
     tiempo = 60;
+    intervalCreateBalls;
     constructor(){
         super('Rosas')
     }
     init(data){
         console.log('estas en Rosas')
         this.anims.resumeAll()
+        this.tweens.resumeAll()
         this.gameOver = false;
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
         this.canPickHeart = data.player.canPickHeart;
+        this.countStar = data.player.countStar;
+        console.log(data.player.countStar)
+        this.tiempo = 60;
         if(!data.player.health) return;
         if(data.player.health) {
             this.healthPlayer = data.player.health;
@@ -45,7 +48,7 @@ export default class Rosas extends Phaser.Scene{
         this.player = new Player(this, spawnPlayer.x, spawnPlayer.y, "player-static", this.healthPlayer);
         this.player.anims.play("player-idle");
 
-        
+        this.textTime = this.add.text(40, 40, '60s', {fontStyle: 'bold'})
         this.time.addEvent({
             delay: 1000,
             callback: this.timer,
@@ -61,8 +64,19 @@ export default class Rosas extends Phaser.Scene{
             bounceY: 1,
             collideWorldBounds: true,
             velocityX: -150,
-            velocityY: -300
+            velocityY: -300,
         });
+        this.muebleGroup = this.physics.add.group({
+            key: 'mueble-static',
+            quantity: 1,
+            bounceX: 1,
+            bounceY: 1,
+            collideWorldBounds: true,
+            velocityX: Phaser.Math.Between(200, 400),
+            velocityY: -300,
+            setXY: { x: Phaser.Math.Between(200, 400), y: 100, stepX: 70 },
+        });
+        this.muebleGroup.playAnimation("mueble-anims")
 
         objectsLayer.objects.forEach(objData => {
             const {x, y, name, type} = objData;
@@ -71,7 +85,7 @@ export default class Rosas extends Phaser.Scene{
                     this.enemy = new EnemyRunner(this, x, y, 'enemy-ira');
                     this.enemy.body.allowGravity = false;
                     this.enemy.move()
-                    setInterval(()=>{
+                    this.intervalCreateBalls = setInterval(()=>{
                         const ball = this.ballsFireGroup.create(this.enemy.x, this.enemy.y, 'balls-fire-static');
                         ball.setVelocityY(200)
                         ball.setVelocityX(Phaser.Math.Between(40, 400))
@@ -88,17 +102,16 @@ export default class Rosas extends Phaser.Scene{
             }
         });
 
-        this.booksIraGroup.create(Phaser.Math.Between(90, 1200), Phaser.Math.Between(116, 260), 'book-ira-static');
-        this.booksIraGroup
-        this.booksIraGroup.children.iterate((book) => {
-            // book.setScale(0.5).refreshBody();
-            book.anims.play('book-ira-anims')
-            book.setBounce(1);
-            book.setCollideWorldBounds(true);
-            book.setVelocity(Phaser.Math.Between(-300, 300), 20);
-            // book.setX(Phaser.Math.FloatBetween(100, 700));
-            // book.allowGravity = false;
-        });
+        // this.booksIraGroup.create(Phaser.Math.Between(90, 1200), Phaser.Math.Between(116, 260), 'book-ira-static');
+        // this.booksIraGroup.children.iterate((book) => {
+        //     // book.setScale(0.5).refreshBody();
+        //     book.anims.play('book-ira-anims')
+        //     book.setBounce(1);
+        //     book.setCollideWorldBounds(true);
+        //     book.setVelocity(Phaser.Math.Between(-300, 300), 20);
+        //     // book.setX(Phaser.Math.FloatBetween(100, 700));
+        //     // book.allowGravity = false;
+        // });
 
         // this.ballsFireGroup.children.entries.forEach((balls) => {
         //     if(balls.y < 780){
@@ -124,17 +137,56 @@ export default class Rosas extends Phaser.Scene{
         //Physics
         this.physics.add.collider(this.player, background);
         this.physics.add.collider(this.booksIraGroup, background);
+        this.physics.add.collider(this.muebleGroup, background);
         //Cuando choca la ball fire -Mures
         this.physics.add.collider(this.player, this.ballsFireGroup, ()=>{
             this.hitPlayer();
         } )
+        //Cuando choca con el Mueble -Mures
+        this.physics.add.collider(this.player, this.muebleGroup, ()=>{
+            this.hitPlayer();
+        } )
+
+        this.physics.add.overlap(this.player, this.booksIraGroup, (player, obstacle)=>{
+            // console.log('Chocaste un obstaculo')
+            obstacle.destroy()
+            const startColor = Phaser.Display.Color.ValueToColor(0xffffff);
+            const endColor = Phaser.Display.Color.ValueToColor(0xff0800);
+            this.tweens.addCounter({
+                from: 0,
+                to: 100,
+                duration: 100,
+                repeat: 2,
+                yoyo: true,
+                ease: Phaser.Math.Easing.Sine.InOut,
+                onStart: tween => {
+                    this.player.anims.play('player-idle', true).on("animationcomplete", ()=>{
+                        setTimeout(()=>{
+                            this.player.anims.play('player-runner')
+                        }, 200)
+                    })
+                },
+                onUpdate: tween => {
+                    
+                    const value = tween.getValue();
+                    const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(startColor, endColor, 100, value)
+
+                    const color = Phaser.Display.Color.GetColor(colorObject.r, colorObject.g, colorObject.b)
+                    this.player.setTint(color)
+                    this.player.setVelocityX(0)
+                    
+                },
+            })
+        }, null, this);
         
         this.physics.world.setBoundsCollision(true, true, true, false);
     }
     hitPlayer(){
         this.physics.pause();
         this.player.setTint(0xff0000);
-        this.player.anims.stop()
+        this.anims.pauseAll();
+        this.tweens.pauseAll();
+        clearInterval(this.intervalCreateBalls)
         this.player.removeHealth();
         this.scene.launch('UI', {player:{health: this.player.health}})
         setTimeout(()=>{
@@ -193,13 +245,41 @@ export default class Rosas extends Phaser.Scene{
 
     timer() {
         this.tiempo -= 1;
-        // textTime.setText(`Tiempo: ${tiempo}`);
-        console.log(this.tiempo)
+        this.textTime.setText(`${this.tiempo}s`);
         if(this.tiempo === 55){
             this.booksIraGroup.create(Phaser.Math.Between(90, 1200), Phaser.Math.Between(116, 260), 'book-ira-static');
+            this.booksIraGroup.playAnimation("book-ira-anims")
         }
-        if (this.tiempo <= 0) {
-            gameOver = true;
+        if(this.tiempo === 40){
+            this.booksIraGroup.create(Phaser.Math.Between(90, 1200), Phaser.Math.Between(116, 260), 'book-ira-static');
+            this.booksIraGroup.playAnimation("book-ira-anims")
+        }
+        if(this.tiempo === 20){
+            this.muebleGroup.create(Phaser.Math.Between(90, 1200), Phaser.Math.Between(116, 260), 'book-ira-static');
+            this.muebleGroup.playAnimation("mueble-anims")
+        }
+        // if (this.tiempo <= 0) {
+        //     // this.gameOver = true;
+        //     this.scene.stop('UI');
+        //     this.scene.stop('Habitacion');
+        //     this.scene.stop(this);
+        //     this.scene.start('GameOver')
+        // }
+        if (this.tiempo <= 0 && this.player.health >= 1 && this.countStar <= 2) {
+            // this.gameOver = true;
+            // this.scene.stop('UI');
+            // this.scene.stop('Habitacion');
+            // this.scene.stop(this);
+            // this.scene.start('GameOver')
+            if(this.countStar <= 2) ++this.countStar;
+            this.scene.stop('UI');
+            this.scene.stop(this);
+            this.scene.start('Habitacion', {
+                player: {
+                    health: this.player.health,
+                    countStar: this.countStar
+                }
+            });
         }
     }
 }
