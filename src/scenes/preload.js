@@ -7,6 +7,13 @@ export default class Preload extends Phaser.Scene {
         console.log('preload')
     }
     preload(){
+
+
+        //Menu animacion
+        this.load.spritesheet('MenuAnim', 'public/assets/menu-sheet.png', {frameWidth: 1280, frameHeight: 768});
+
+        this.load.image("creditos", "public/assets/creditos.png");
+
         //Mapa
         this.load.tilemapTiledJSON('runner', 'public/assets/tilemaps/runner.json');
         this.load.tilemapTiledJSON('rosas', 'public/assets/tilemaps/rosas.json');
@@ -22,6 +29,7 @@ export default class Preload extends Phaser.Scene {
         this.load.image("Npc1", "public/assets/oscuro.png");
         this.load.image("Npc2", "public/assets/naranja.png");
         this.load.image("Npc3", "public/assets/celeste.png");
+        
 
 
 
@@ -54,12 +62,19 @@ export default class Preload extends Phaser.Scene {
         this.load.spritesheet('book-ira-spritesheet', 'public/assets/rosas/book-ira.png', {frameWidth: 64, frameHeight: 64});
         this.load.image('mueble-static', 'public/assets/rosas/book-ira-static.png');
         this.load.spritesheet('mueble-spritesheet', 'public/assets/rosas/book-ira.png', {frameWidth: 133, frameHeight: 107});
+
+
+
+
+        //assets del final
+        this.load.image('finA', 'public/assets/finA.png');
+        this.load.image('finB', 'public/assets/finB.png');
     }
 
     create() {
         const {width, heigth} = this.scale;
         this.add.text(500 , 500, 'Cargando')
-        this.scene.start("MainMenu");
+        this.scene.start("Creditos");
 
         this.anims.create({
             key: "player-idle",
@@ -129,6 +144,18 @@ export default class Preload extends Phaser.Scene {
                 end: 6,
             }),
             frameRate: 12,
+            repeat: -1,
+        });
+
+
+
+        this.anims.create({
+            key: "MenuAnimado",
+            frames: this.anims.generateFrameNumbers("MenuAnim", {
+                start: 0,
+                end: 6,
+            }),
+            frameRate: 5,
             repeat: -1,
         });
     }
