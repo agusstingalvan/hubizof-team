@@ -6,6 +6,7 @@ export default class MainMenu extends Phaser.Scene {
         super("MainMenu");
     }
     create() {
+        
         const sonidos = new SoundsManage(this.sound);
         sonidos.sound.musicMenu.play();
         //background MENU
@@ -18,5 +19,6 @@ export default class MainMenu extends Phaser.Scene {
         this.btnPlayRunner = new Button(this,this.game.config.width-200, this.cameras.main.centerY/.85, "btn" ,"Jugar", 28, ()=>{this.scene.start("Habitacion", {sonidos})}, 1.8);
 
         this.btnCreditos = new Button(this,this.game.config.width-200, this.cameras.main.centerY/.71, "btn" ,"Creditos", 24, ()=>{this.scene.start("Creditos", {sonidos})}, 1.5);
+        this.add.text(this.cameras.main.centerX/1.5, this.cameras.main.centerY/5,'Violeta y sus pesadillas' , {fontFamily: 'Open Sans', fontSize: 64, fontStyle: 'bold', color: '#488bd4'}).setOrigin(.5)
     }
 }

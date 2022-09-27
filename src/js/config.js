@@ -1,5 +1,5 @@
 
-import Preload from "../scenes/Preload.js";
+import Preload from "../scenes/preload.js";
 import MainMenu from "../scenes/MainMenu.js";
 import Runner from "../scenes/Runner.js";
 import UI from "../scenes/UI.js";
@@ -8,7 +8,6 @@ import Habitacion from "../scenes/Habitacion.js";
 import Rosas from "../scenes/Rosas.js";
 import Victoria from "../scenes/Victoria.js";
 import Creditos from "../scenes/Creditos.js"
-
 
 export const config = {
     type: Phaser.AUTO,
