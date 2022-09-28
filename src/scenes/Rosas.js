@@ -278,7 +278,8 @@ export default class Rosas extends Phaser.Scene{
                 player: {
                     health: this.player.health,
                     countStar: this.countStar
-                }
+                },
+                sonidos: this.sonidos
             });
         }
     }

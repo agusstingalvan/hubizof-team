@@ -10,10 +10,9 @@ export default class MainMenu extends Phaser.Scene {
         const sonidos = new SoundsManage(this.sound);
         sonidos.sound.musicMenu.play();
         //background MENU
-        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "backMenu")
-        .setScale(1.95)
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "menustatico")
         
-        this.Menuanimado = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY).play('MenuAnimado');
+        // this.Menuanimado = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY).play('MenuAnimado');
 
         // parametros button scene, x, y, texture, text, callback, scale
         this.btnPlayRunner = new Button(this,this.game.config.width-200, this.cameras.main.centerY/.85, "btn" ,"Jugar", 28, ()=>{this.scene.start("Habitacion", {sonidos})}, 1.8);

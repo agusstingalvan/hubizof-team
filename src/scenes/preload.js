@@ -7,6 +7,7 @@ export default class Preload extends Phaser.Scene {
 
         //Menu animacion
         this.load.spritesheet('MenuAnim', 'public/assets/menu-sheet.png', {frameWidth: 1280, frameHeight: 768});
+        this.load.image('menustatico', 'public/assets/menu.png');
 
         this.load.image("creditos", "public/assets/creditos.png");
 
